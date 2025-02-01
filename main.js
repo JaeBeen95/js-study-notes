@@ -1,20 +1,10 @@
-class User {
-  constructor(username) {
-    this._username = username;
-  }
-
-  get username() {
-    return this._username;
-  }
-
-  set username(value) {
-    this._username = value;
-  }
-
-  sayHi() {
-    return `안녕하세요, ${this._username}입니다`;
-  }
+function User(username) {
+  this.username = username;
 }
+
+User.prototype.sayHi = function (username) {
+  return `안녕하세요, ${username}입니다`;
+};
 
 const testObject = {
   user: new User("nin2348"),
@@ -55,3 +45,4 @@ function cloneDeep(target) {
   return clonedTarget;
 }
 
+console.log(testObject, cloneDeep(testObject));
