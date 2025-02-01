@@ -17,7 +17,7 @@ class User {
 }
 
 const testObject = {
-  user: new User("kim123"),
+  user: new User("nin2348"),
   profile: {
     hobbies: ["노래", "운동"],
     info: {
@@ -27,8 +27,22 @@ const testObject = {
   },
 };
 
+const testArray = [
+  1,
+  "문자열",
+  [1, 2, 3],
+  new User("nin2348"),
+  {
+    deep: {
+      deeper: {
+        deepest: "가장 깊은 값",
+      },
+    },
+  },
+];
+
 function cloneDeep(target) {
-  let clonedTarget = {};
+  let clonedTarget = Array.isArray(target) ? [] : {};
 
   if (typeof target === "object" && target !== null) {
     for (let prop in target) {
@@ -41,4 +55,3 @@ function cloneDeep(target) {
   return clonedTarget;
 }
 
-console.log(cloneDeep(testObject));
