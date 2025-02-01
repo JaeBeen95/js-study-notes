@@ -16,10 +16,6 @@ const testObject = {
     },
   },
 
-  wow() {
-    return "wow";
-  },
-
   get greet() {
     return "Hello";
   },
