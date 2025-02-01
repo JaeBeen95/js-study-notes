@@ -16,7 +16,7 @@ class User {
   }
 }
 
-const testObj = {
+const testObject = {
   user: new User("kim123"),
   profile: {
     hobbies: ["노래", "운동"],
@@ -26,3 +26,19 @@ const testObj = {
     },
   },
 };
+
+function cloneDeep(target) {
+  let clonedTarget = {};
+
+  if (typeof target === "object" && target !== null) {
+    for (let prop in target) {
+      clonedTarget[prop] = cloneDeep(target[prop]);
+    }
+  } else {
+    clonedTarget = target;
+  }
+
+  return clonedTarget;
+}
+
+console.log(cloneDeep(testObject));
