@@ -15,6 +15,14 @@ const testObject = {
       city: "why",
     },
   },
+
+  wow() {
+    return "wow";
+  },
+
+  get greet() {
+    return "Hello";
+  },
 };
 
 const testArray = [
@@ -44,11 +52,19 @@ function cloneDeep(target) {
     return clonedArray;
   }
 
+  if (target.constructor !== Object) {
+    const clonedInstance = new target.constructor();
+
+    Object.keys(target).forEach((key) => {
+      clonedInstance[key] = cloneDeep(target[key]);
+    });
+
+    return clonedInstance;
+  }
+
   const clonedObject = {};
   Object.keys(target).forEach((key) => {
     clonedObject[key] = cloneDeep(target[key]);
   });
   return clonedObject;
 }
-
-console.log(testObject.user.constructor);
