@@ -34,15 +34,15 @@ const testArray = [
 function cloneDeep(target) {
   let clonedTarget = Array.isArray(target) ? [] : {};
 
+  const ownProperties = Object.getOwnPropertyNames(target);
+
   if (typeof target === "object" && target !== null) {
-    for (let prop in target) {
-      clonedTarget[prop] = cloneDeep(target[prop]);
-    }
+    ownProperties.forEach((ownProperty) => {
+      clonedTarget[ownProperty] = cloneDeep(target[ownProperty]);
+    });
   } else {
     clonedTarget = target;
   }
 
   return clonedTarget;
 }
-
-console.log(testObject, cloneDeep(testObject));
