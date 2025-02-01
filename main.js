@@ -51,16 +51,35 @@ function cloneDeep(target) {
   if (target.constructor !== Object) {
     const clonedInstance = new target.constructor();
 
-    Object.keys(target).forEach((key) => {
-      clonedInstance[key] = cloneDeep(target[key]);
+    const descriptors = Object.getOwnPropertyDescriptors(target);
+
+    Object.keys(descriptors).forEach((key) => {
+      const descriptor = descriptors[key];
+
+      if (descriptor.get || descriptor.set) {
+        Object.defineProperty(clonedInstance, key, descriptor);
+      } else {
+        clonedInstance[key] = cloneDeep(descriptor.value);
+      }
     });
 
     return clonedInstance;
   }
 
   const clonedObject = {};
-  Object.keys(target).forEach((key) => {
-    clonedObject[key] = cloneDeep(target[key]);
+  const descriptors = Object.getOwnPropertyDescriptors(target);
+
+  Object.keys(descriptors).forEach((key) => {
+    const descriptor = descriptors[key];
+
+    if (descriptor.get || descriptor.set) {
+      Object.defineProperty(clonedObject, key, descriptor);
+    } else {
+      clonedObject[key] = cloneDeep(descriptor.value);
+    }
   });
+
   return clonedObject;
 }
+
+console.log(cloneDeep(testObject));
