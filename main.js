@@ -12,7 +12,7 @@ const testObject = {
     hobbies: ["노래", "운동"],
     info: {
       age: 30,
-      city: "Seoul",
+      city: "why",
     },
   },
 };
@@ -32,19 +32,23 @@ const testArray = [
 ];
 
 function cloneDeep(target) {
-  let clonedTarget = Array.isArray(target) ? [] : {};
-
-  const ownProperties = Object.keys(target);
-
-  if (typeof target === "object" && target !== null) {
-    ownProperties.forEach((ownProperty) => {
-      clonedTarget[ownProperty] = cloneDeep(target[ownProperty]);
-    });
-  } else {
-    clonedTarget = target;
+  if (typeof target !== "object" || target === null) {
+    return target;
   }
 
-  return clonedTarget;
+  if (Array.isArray(target)) {
+    const clonedArray = [];
+    target.forEach((item, index) => {
+      clonedArray[index] = cloneDeep(item);
+    });
+    return clonedArray;
+  }
+
+  const clonedObject = {};
+  Object.keys(target).forEach((key) => {
+    clonedObject[key] = cloneDeep(target[key]);
+  });
+  return clonedObject;
 }
 
-console.log(testObject, cloneDeep(testObject));
+console.log(testObject.user.constructor);
