@@ -34,7 +34,7 @@ const testArray = [
 function cloneDeep(target) {
   let clonedTarget = Array.isArray(target) ? [] : {};
 
-  const ownProperties = Object.getOwnPropertyNames(target);
+  const ownProperties = Object.keys(target);
 
   if (typeof target === "object" && target !== null) {
     ownProperties.forEach((ownProperty) => {
@@ -46,3 +46,5 @@ function cloneDeep(target) {
 
   return clonedTarget;
 }
+
+console.log(testObject, cloneDeep(testObject));
