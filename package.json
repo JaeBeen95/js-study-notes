@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  },
+  "name": "practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JaeBeen95/js-study-notes",
+  "author": "JaeBeen95 <nin2348@gmail.com>",
+  "license": "MIT"
+}
