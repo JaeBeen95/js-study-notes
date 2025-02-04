@@ -1,4 +1,4 @@
-function cloneDeep<T>(target: T): T {
+export default function cloneDeep<T>(target: T): T {
   if (typeof target !== "object" || target === null) {
     return target;
   }
