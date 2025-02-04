@@ -1,21 +1,18 @@
-function cloneDeep(target) {
+function cloneDeep<T>(target: T): T {
   if (typeof target !== "object" || target === null) {
     return target;
   }
 
   if (Array.isArray(target)) {
-    const clonedArray = [];
-    target.forEach((item, index) => {
-      clonedArray[index] = cloneDeep(item);
-    });
+    const clonedArray = target.map((item) => cloneDeep(item)) as unknown as T;
     return clonedArray;
   }
 
-  const clonedObject = target.constructor !== Object ? new target.constructor() : {};
+  const clonedObject = Object.create(Object.getPrototypeOf(target)) as T;
 
   const descriptors = Object.getOwnPropertyDescriptors(target);
 
-  Object.keys(descriptors).forEach((key) => {
+  (Object.keys(descriptors) as Array<keyof T>).forEach((key) => {
     const descriptor = descriptors[key];
 
     if (descriptor.get || descriptor.set) {
