@@ -1,4 +1,7 @@
 import cloneDeep from "./cloneDeep";
+import memoize from "./memoize";
+
+// cloneDeep test
 
 class User {
   username: string;
@@ -28,3 +31,15 @@ const testObject = {
 };
 
 console.log(testObject, cloneDeep(testObject));
+
+// memoize test
+
+const foo = { a: 1, b: 2 };
+const func = memoize((value: any) => Object.values(value));
+
+console.log(func(foo)); // [1, 2]
+foo.a = 2;
+console.log(func(foo)); // [1, 2]
+
+func.cache.delete(foo);
+console.log(func(foo)); // [2, 2]
