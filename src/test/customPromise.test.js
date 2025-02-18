@@ -7,4 +7,14 @@ describe("CustomPromise 테스트", () => {
     });
     expect(result).toBe("성공");
   });
+
+  test("reject 테스트", async () => {
+    try {
+      await new CustomPromise((_, reject) => {
+        reject("실패");
+      });
+    } catch (error) {
+      expect(error).toBe("실패");
+    }
+  });
 });
