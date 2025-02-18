@@ -16,7 +16,10 @@ export class CustomPromise {
     if (this.promiseState !== "pending") return;
     this.promiseResult = error;
     this.promiseState = "rejected";
-    throw new Error("Uncaught (in promise) " + error);
+
+    setTimeout(() => {
+      throw new Error("Uncaught (in promise) " + error);
+    }, 0);
   }
 
   then(onFulfilled, onRejected) {
