@@ -1,4 +1,4 @@
-class CustomPromise {
+export class CustomPromise {
   promiseState = "pending";
   promiseResult;
 
