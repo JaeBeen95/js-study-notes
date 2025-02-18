@@ -1,7 +1,16 @@
 {
   "devDependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/node": "^22.13.1",
+    "jest": "^29.7.0",
     "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "jest": {
+    "watchman": false
   },
   "name": "practice",
   "version": "1.0.0",
