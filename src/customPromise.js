@@ -19,7 +19,19 @@ class CustomPromise {
     throw new Error("Uncaught (in promise) " + error);
   }
 
-  then() {}
+  then(onFulfilled, onRejected) {
+    return new CustomPromise((resolve, reject) => {
+      if (this.promiseState === "fulfilled") {
+        const result = onFulfilled(this.promiseResult);
+        resolve(result);
+      }
+
+      if (this.promiseState === "rejected") {
+        const result = onRejected(this.promiseResult);
+        reject(result);
+      }
+    });
+  }
 
   catch() {}
 
