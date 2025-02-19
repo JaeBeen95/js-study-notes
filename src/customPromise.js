@@ -36,7 +36,9 @@ export class CustomPromise {
     });
   }
 
-  catch() {}
+  catch(onRejected) {
+    this.then(null, onRejected);
+  }
 
   finally() {}
 }
