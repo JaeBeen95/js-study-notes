@@ -3,6 +3,8 @@ export class CustomPromise {
   promiseResult;
 
   constructor(executor) {
+    this.onFulfilledList = [];
+    this.onRejectedList = [];
     executor(this.resolve.bind(this), this.reject.bind(this));
   }
 
@@ -10,6 +12,8 @@ export class CustomPromise {
     if (this.promiseState !== "pending") return;
     this.promiseResult = value;
     this.promiseState = "fulfilled";
+
+    this.onFulfilledList.forEach((callback) => callback(value));
   }
 
   reject(error) {
@@ -18,26 +22,30 @@ export class CustomPromise {
     this.promiseState = "rejected";
 
     setTimeout(() => {
-      throw new Error("Uncaught (in promise) " + error);
+      if (this.onRejectedList.length === 0) {
+        throw error;
+      }
     }, 0);
+
+    this.onRejectedList.forEach((callback) => callback(error));
   }
 
   then(onFulfilled, onRejected) {
     return new CustomPromise((resolve, reject) => {
-      if (this.promiseState === "fulfilled") {
-        const result = onFulfilled(this.promiseResult);
+      this.onFulfilledList.push((value) => {
+        const result = onFulfilled(value);
         resolve(result);
-      }
+      });
 
-      if (this.promiseState === "rejected") {
-        const result = onRejected(this.promiseResult);
+      this.onRejectedList.push((error) => {
+        const result = onRejected(error);
         reject(result);
-      }
+      });
     });
   }
 
   catch(onRejected) {
-    this.then(null, onRejected);
+    return this.then(null, onRejected);
   }
 
   finally() {}
