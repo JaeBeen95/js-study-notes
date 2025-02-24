@@ -16,9 +16,9 @@ export class CustomPromise {
     this.promiseResult = value;
 
     if (this.onFulfilledList) {
-      setTimeout(() => {
+      queueMicrotask(() => {
         this.onFulfilledList.forEach((callback) => callback(value));
-      }, 0);
+      });
     }
   }
 
@@ -29,9 +29,9 @@ export class CustomPromise {
     this.promiseResult = error;
 
     if (this.onRejectedList) {
-      setTimeout(() => {
+      queueMicrotask(() => {
         this.onRejectedList.forEach((callback) => callback(error));
-      }, 0);
+      });
     }
   }
 
@@ -39,19 +39,19 @@ export class CustomPromise {
     return new CustomPromise((resolve, reject) => {
       // 이전 프로미스 인스턴스 상태가 fulfilled일 때,
       if (this.promiseState === "fulfilled") {
-        setTimeout(() => {
+        queueMicrotask(() => {
           const result = onFulfilled(this.promiseResult);
           resolve(result);
-        }, 0);
+        });
         return;
       }
 
-      // 이전 프로미스 인스턴스가 상태가 fulfilled일 때,
+      // 이전 프로미스 인스턴스가 상태가 rejected일 때,
       if (this.promiseState === "rejected" && onRejected) {
-        setTimeout(() => {
+        queueMicrotask(() => {
           const result = onRejected(this.promiseResult);
           resolve(result);
-        }, 0);
+        });
         return;
       }
 
