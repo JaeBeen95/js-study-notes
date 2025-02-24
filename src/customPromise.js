@@ -1,8 +1,7 @@
 export class CustomPromise {
-  promiseState = "pending";
-  promiseResult;
-
   constructor(executor) {
+    this.promiseState = "pending";
+    this.promiseResult;
     this.onFulfilledList = [];
     this.onRejectedList = [];
 
@@ -17,7 +16,7 @@ export class CustomPromise {
 
     if (this.onFulfilledList) {
       queueMicrotask(() => {
-        this.onFulfilledList.forEach((callback) => callback(value));
+        this.onFulfilledList.forEach((callback) => callback(this.promiseResult));
       });
     }
   }
@@ -30,7 +29,7 @@ export class CustomPromise {
 
     if (this.onRejectedList) {
       queueMicrotask(() => {
-        this.onRejectedList.forEach((callback) => callback(error));
+        this.onRejectedList.forEach((callback) => callback(this.promiseResult));
       });
     }
   }
