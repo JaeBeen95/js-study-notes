@@ -38,4 +38,38 @@ describe("CustomPromise 테스트", () => {
         expect(error).toBe("에러");
       });
   });
+
+  test("resolve 후 finally 테스트", () => {
+    let finallyCalled = false;
+
+    return new CustomPromise((resolve) => {
+      resolve("성공");
+    })
+      .then((result) => {
+        expect(result).toBe("성공");
+      })
+      .finally(() => {
+        finallyCalled = true;
+      })
+      .then(() => {
+        expect(finallyCalled).toBe(true);
+      });
+  });
+
+  test("reject 후 finally 테스트", () => {
+    let finallyCalled = false;
+
+    return new CustomPromise((_, reject) => {
+      reject("에러");
+    })
+      .catch((error) => {
+        expect(error).toBe("에러");
+      })
+      .finally(() => {
+        finallyCalled = true;
+      })
+      .then(() => {
+        expect(finallyCalled).toBe(true);
+      });
+  });
 });
