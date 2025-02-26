@@ -3,7 +3,9 @@ import { CustomPromise } from "../customPromise";
 describe("CustomPromise 테스트", () => {
   test("resolve 테스트", () => {
     return new CustomPromise((resolve) => {
-      resolve("성공");
+      setTimeout(() => {
+        resolve("성공");
+      }, 100);
     }).then((result) => {
       expect(result).toBe("성공");
     });
@@ -11,7 +13,9 @@ describe("CustomPromise 테스트", () => {
 
   test("reject 테스트", () => {
     return new CustomPromise((_, reject) => {
-      reject("실패");
+      setTimeout(() => {
+        reject("실패");
+      }, 100);
     }).catch((error) => {
       expect(error).toBe("실패");
     });
