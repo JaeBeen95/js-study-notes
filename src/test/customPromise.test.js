@@ -76,4 +76,26 @@ describe("CustomPromise 테스트", () => {
         expect(finallyCalled).toBe(true);
       });
   });
+
+  test("첫 번째 resolve 이후 두 번째 resolve 무시시", () => {
+    let resolveCount = 0;
+
+    return new CustomPromise((resolve) => {
+      resolve("첫번째 결과");
+      resolve("두번째 결과");
+    }).then((result) => {
+      resolveCount++;
+      expect(result).toBe("첫번째 결과");
+      expect(resolveCount).toBe(1);
+    });
+  });
+
+  test("resolve 후의 reject 무시시", () => {
+    return new CustomPromise((resolve, reject) => {
+      resolve("완료");
+      reject(new Error("에러"));
+    }).then((result) => {
+      expect(result).toBe("완료");
+    });
+  });
 });
