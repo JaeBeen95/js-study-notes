@@ -76,5 +76,16 @@ export class CustomPromise {
     return this.then(null, onRejected);
   }
 
-  finally() {}
+  finally(onFinally) {
+    return this.then(
+      (value) => {
+        onFinally();
+        return value;
+      },
+      (error) => {
+        onFinally();
+        return new CustomPromise((_, reject) => reject(error));
+      }
+    );
+  }
 }
